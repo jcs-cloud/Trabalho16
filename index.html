@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Identificar Triângulo</title>
+  <style>
+    body { 
+      font-family: Arial; 
+      text-align: center; 
+      padding: 20px; 
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto; 
+      padding: 20px;
+      border: 1px solid #ccc; 
+      border-radius: 8px; 
+      background-color: #fff; 
+    }
+
+    h1 { 
+      font-size: 40px; 
+      color: rgb(163, 95, 209); 
+      margin-bottom: 30px; 
+    }
+
+    p { 
+      font-size: 18px; 
+      color: black; 
+    }
+
+    input { 
+      font-size: 16px; 
+      padding: 5px; 
+      margin: 10px; 
+      width: 100px; 
+      border: 1px solid #ccc; 
+      border-radius: 5px; 
+      text-align: center;
+    }
+
+    button { 
+      font-size: 18px; 
+      padding: 10px 20px; 
+      margin-top: 20px; 
+      background-color: rgb(95, 173, 209); 
+      color: white; 
+      border: none; 
+      border-radius: 5px; 
+      cursor: pointer; 
+    }
+
+    button:disabled { 
+      background-color: grey; 
+      cursor: not-allowed; 
+    }
+
+    img {
+      display: block;
+      margin: 20px auto; 
+      max-width: 300px;
+      height: auto;
+    }
+    .back-button {
+      font-size: 14px;
+      background-color: rgb(209, 95, 95);
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      margin-top: 20px;
+      cursor: pointer;
+      border-radius: 5px;
+      display: inline-block;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Identificar Triângulo</h1>
+    <p>Indique os valores dos lados do triângulo e clique no botão. Certifique-se de que os valores atendem às condições necessárias para formar um triângulo válido.</p>
+    <p>
+      <input type="number" id="ladoa" placeholder="Lado A" oninput="checkFields()" min="1"><br>
+      <input type="number" id="ladob" placeholder="Lado B" oninput="checkFields()" min="1"><br>
+      <input type="number" id="ladoc" placeholder="Lado C" oninput="checkFields()" min="1"><br> 
+      <button id="verificar" onclick="identificarTriangulo()" disabled>Verificar</button><br> <br>
+      <strong>O Triângulo é:</strong> <span id="tipo"></span>
+    </p>
+    <img id="imagem" src="" alt="" style="display: none;">
+    <button onclick="location.href='../homepage.html'">Voltar para a Página Principal</button>
+  </div>
+
+  <script>
+    function checkFields() {
+      const ladoa = parseFloat(document.getElementById("ladoa").value) || 0;
+      const ladob = parseFloat(document.getElementById("ladob").value) || 0;
+      const ladoc = parseFloat(document.getElementById("ladoc").value) || 0;
+      const button = document.getElementById("verificar");
+
+      if (
+        ladoa > 0 &&
+        ladob > 0 &&
+        ladoc > 0 &&
+        ladoa + ladob > ladoc &&
+        ladoa + ladoc > ladob &&
+        ladob + ladoc > ladoa
+      ) {
+        button.disabled = false;
+      } else {
+        button.disabled = true;
+      }
+    }
+
+    function identificarTriangulo() {
+      const ladoa = parseFloat(document.getElementById("ladoa").value);
+      const ladob = parseFloat(document.getElementById("ladob").value);
+      const ladoc = parseFloat(document.getElementById("ladoc").value);
+      const tipoSpan = document.getElementById("tipo");
+      const imagem = document.getElementById("imagem");
+
+      let tipo, imgSrc;
+
+      if (ladoa === ladob && ladob === ladoc) {
+        tipo = "Equilátero";
+        imgSrc = "equilatero.png"; 
+      } else if (ladoa === ladob || ladoa === ladoc || ladob === ladoc) {
+        tipo = "Isósceles";
+        imgSrc = "isosceles.png"; 
+      } else {
+        tipo = "Escaleno";
+        imgSrc = "escaleno.png"; 
+      }
+
+      tipoSpan.textContent = tipo;
+      imagem.src = imgSrc;
+      imagem.style.display = "block";
+    }
+  </script>
+
+</body>
+</html>
